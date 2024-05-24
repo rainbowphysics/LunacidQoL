@@ -9,6 +9,8 @@
 - Open the .csproj and build using an IDE 
 - Copy the resulting LunacidQoL.dll into BepInEx/plugins alongside MMHOOK_Assembly-CSharp.dll
 
+Alternatively, download LunacidQoL.dll and MMHOOK_Assembly-CSharp.dll from the latest release
+
 ### In the future, it would also be nice to fix the following problems:
 - Elevators causing jitter when going up and down
 - Broken lighting in hub
