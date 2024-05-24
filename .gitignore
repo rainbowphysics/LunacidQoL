@@ -2,6 +2,7 @@
 .idea
 bin
 obj
+lib/Assembly-CSharp.dll
 
 # ReSharper metadata?
 Folder.DotSettings.user
