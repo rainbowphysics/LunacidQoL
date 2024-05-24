@@ -6,7 +6,7 @@
 ## Installation:
 - Install BepInEx for Lunacid: https://docs.bepinex.dev/articles/user_guide/installation/index.html
 - Download and extract the repo
-- Open the .csproj and build using an IDE 
+- Open the .csproj and build using an IDE, and add the game's Assembly-CSharp.dll as a referenced assembly 
 - Copy the resulting LunacidQoL.dll into BepInEx/plugins alongside MMHOOK_Assembly-CSharp.dll
 
 Alternatively, download LunacidQoL.dll and MMHOOK_Assembly-CSharp.dll from the latest release
