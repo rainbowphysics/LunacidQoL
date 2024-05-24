@@ -1,0 +1,7 @@
+﻿# Rider and build folders
+.idea
+bin
+obj
+
+# ReSharper metadata?
+Folder.DotSettings.user
