@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using UnityEngine;
 
 namespace LunacidQoL
@@ -17,6 +18,12 @@ namespace LunacidQoL
                 
                 var raycheck = self.gameObject.AddComponent<Raycheck>();
                 raycheck.Logger = Logger;
+            };
+
+            On.Player_Control_scr.OnEnable += (orig, self) =>
+            {
+                orig(self);
+                self.CAM2.GetComponent<Effect_scr>().Effect_mat.SetFloat("_GAMMA", self.CON.CURRENT_SYS_DATA.SETT_GAMMA);
             };
         }
     }

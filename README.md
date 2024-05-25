@@ -2,6 +2,7 @@
 
 ## Current features:
 - Projectiles no longer phase through walls
+- Fixed gamma resetting when loading scene 
 
 ## Installation:
 - Install BepInEx for Lunacid: https://docs.bepinex.dev/articles/user_guide/installation/index.html
