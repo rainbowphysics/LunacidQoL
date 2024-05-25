@@ -9,7 +9,7 @@ namespace LunacidQoL
     [BepInProcess("LUNACID.exe")]
     public class Plugin : BaseUnityPlugin
     {
-        private List<GameObject> _projectiles = new List<GameObject>();
+        private List<GameObject> _projectiles = new();
         private void Awake()
         {
             // Plugin startup logic
@@ -27,6 +27,8 @@ namespace LunacidQoL
                 rb.interpolation = RigidbodyInterpolation.Extrapolate;
                 rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
+                anchor.AddComponent<CollideOnce>();
+                
                 anchor.transform.position = self.gameObject.transform.position;
                 anchor.transform.parent = self.gameObject.transform;
 
