@@ -20,7 +20,6 @@
   <!-- References - Game Assemblies -->
   <ItemGroup Condition="$(CI) != 'true'">
  	<Reference Include="$(ManagedDirectory)Assembly-CSharp.dll" Publicize="true" Private="false"/>
-    <Reference Include="$(ManagedDirectory)UnityEngine.UI.dll" Publicize="true" Private="false"/>
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
