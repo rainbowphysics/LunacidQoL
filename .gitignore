@@ -6,3 +6,6 @@ lib/Assembly-CSharp.dll
 
 # ReSharper metadata?
 Folder.DotSettings.user
+
+# csproj.user files
+*.csproj.user

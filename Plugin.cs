@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LunacidQoL
 {
-    [BepInPlugin("org.bepinex.plugins.lunacidqol", "Lunacid QoL", "0.1.0")]
+    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     [BepInProcess("LUNACID.exe")]
     public class Plugin : BaseUnityPlugin
     {
