@@ -24,20 +24,8 @@ public class Raycheck : MonoBehaviour
         if (_dt != null && !_dt.Constant)
         {
             _dt.last = Time.time - Mathf.Epsilon;
-            StartCoroutine(BeginChecks());
+            _doCheck = true;
         }
-    }
-
-    protected IEnumerator BeginChecks()
-    {
-        // Don't begin checks immediately, but instead wait for all components to be initialized
-        yield return new WaitForEndOfFrame();
-        
-        // Then wait for the projectile to advance one physics timestep
-        yield return new WaitForFixedUpdate();
-        
-        // Now start raychecking 
-        _doCheck = true;
     }
 
     protected void CheckCollision(Vector3 startPos, Vector3 endPos, bool reverse)
@@ -62,13 +50,8 @@ public class Raycheck : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             var collider = _raycastHits[i].collider;
-            var originalPos = transform.position;
-            transform.position = _raycastHits[i].point;
             if (!collider.isTrigger)
                 _dt.OnTriggerEnter(_raycastHits[i].collider);
-
-            if (gameObject != null)
-                transform.position = originalPos;
         }
     }
 
@@ -80,13 +63,16 @@ public class Raycheck : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        var pos = _rb.position;
-        var nextPos = pos + _rb.velocity * Time.fixedDeltaTime;
-        
-        // Do not bother checking if change between pos, nextPos is effectively 0
-        if (Vector3.Distance(pos, nextPos) < Mathf.Epsilon)
+        // Difference in backwards and forward directions
+        var dx = _rb.velocity * Time.fixedDeltaTime / 4;
+        // Do not bother checking if dx is negligible 
+        if (Vector3.SqrMagnitude(dx) < Mathf.Epsilon)
             return;
-
-        CheckCollisions(pos, nextPos);
+        
+        // Get current position, then extrapolate backwards and forward 
+        var curPos = _rb.position;
+        var prevPos = curPos - 3 * dx;
+        var nextPos = curPos + dx;
+        CheckCollisions(prevPos, nextPos);
     }
 }
