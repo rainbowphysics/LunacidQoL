@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BepInEx;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace LunacidQoL
     [BepInProcess("LUNACID.exe")]
     public class Plugin : BaseUnityPlugin
     {
+        private List<GameObject> _projectiles = new List<GameObject>();
         private void Awake()
         {
             // Plugin startup logic
@@ -15,9 +17,33 @@ namespace LunacidQoL
             On.Item_Emit.Start += (orig, self) =>
             {
                 orig(self);
+                var anchor = new GameObject("Anchor");
+                var collider = anchor.AddComponent<SphereCollider>();
+                collider.radius = 0.025f;
+                collider.center = Vector3.zero;
+
+                var rb = self.gameObject.GetComponent<Rigidbody>();
+                rb.detectCollisions = true;
+                rb.interpolation = RigidbodyInterpolation.Extrapolate;
+                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+
+                anchor.transform.position = self.gameObject.transform.position;
+                anchor.transform.parent = self.gameObject.transform;
+
+                _projectiles.Add(gameObject);
+            };
+
+            On.Damage_Trigger.Die += (orig, self, obj) =>
+            {
+                _projectiles.RemoveAll(go => go == null);
+
+                if (_projectiles.Contains(self.gameObject))
+                {
+                    var anchorGo = self.gameObject.transform.Find("Anchor");
+                    Destroy(anchorGo);
+                }
                 
-                var raycheck = self.gameObject.AddComponent<Raycheck>();
-                raycheck.Logger = Logger;
+                orig(self, obj);
             };
 
             On.Player_Control_scr.OnEnable += (orig, self) =>
